@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Public Good – Organizations</title>
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: 'Lato','Helvetica',sans-serif;
+      line-height:1.6;
+      color:#333;
+      height:100vh;
+      overflow:hidden;
+      background:#f5f7fa;
+    }
+    h1,h2,h3,h4,h5,h6 { font-family:'Montserrat','Helvetica',sans-serif; }
+
+    .app-container { display:flex; height:100vh; overflow:hidden; }
+
+    /* Sidebar */
+    .sidebar {
+      background:#2c3e50;
+      color:#ecf0f1;
+      width:240px;
+      transition:width .3s ease;
+      display:flex;
+      flex-direction:column;
+    }
+    .sidebar.collapsed { width:60px; }
+    .sidebar-header {
+      padding:16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom:1px solid #34495e;
+    }
+    .logo-container { display:flex; align-items:center; justify-content:center; }
+    .logo, .logo-small { display:block; }
+    .logo { width:40px; height:40px; }
+    .logo-small { width:30px; height:30px; display:none; }
+    .toggle-btn {
+      background:none;
+      border:none;
+      color:#ecf0f1;
+      cursor:pointer;
+      padding:4px;
+    }
+    .material-icons { font-size:24px; }
+    .menu-items { flex:1; padding:16px 0; }
+    .menu-item {
+      display:flex;
+      align-items:center;
+      padding:12px 16px;
+      cursor:pointer;
+      transition:background .2s;
+    }
+    .menu-item:hover { background:#34495e; }
+    .menu-item.active { background:#D25B40; }
+    .menu-text { margin-left:12px; white-space:nowrap; }
+
+    /* Main Content */
+    .main-content { flex:1; background:#f5f7fa; overflow-y:auto; }
+    .organizations-container { padding:20px; }
+    .header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:24px;
+    }
+    .header h1 {
+      font-size:24px;
+      font-weight:600;
+      color:#2c3e50;
+    }
+    .add-button {
+      display:flex;
+      align-items:center;
+      background:#D25B40;
+      color:#fff;
+      border:none;
+      border-radius:4px;
+      padding:8px 16px;
+      font-size:14px;
+      cursor:pointer;
+      transition:background .2s;
+    }
+    .add-button:hover { background:#B24836; }
+    .add-button i { margin-right:8px; }
+
+    /* Search + Facets */
+    .search-section {
+      background:#fff;
+      border-radius:8px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.05);
+      padding:16px;
+      margin-bottom:20px;
+    }
+    .search-container { position:relative; margin-bottom:16px; }
+    .search-icon {
+      position:absolute;
+      left:12px; top:50%;
+      transform:translateY(-50%);
+      color:#7f8c8d;
+    }
+    .search-input {
+      width:100%;
+      padding:10px 10px 10px 40px;
+      border:1px solid #ddd;
+      border-radius:4px;
+      font-size:14px;
+    }
+    .facet-filters { display:flex; flex-wrap:wrap; }
+    .facet { margin-right:24px; margin-bottom:12px; }
+    .facet label {
+      display:block;
+      font-weight:600;
+      color:#34495e;
+      margin-bottom:8px;
+    }
+    .facet-options {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .facet-option {
+      padding:6px 12px;
+      background:#f5f7fa;
+      border-radius:16px;
+      font-size:13px;
+      cursor:pointer;
+      transition:background .2s;
+    }
+    .facet-option:hover { background:#e1e5eb; }
+    .facet-option.selected {
+      background:#D25B40;
+      color:#fff;
+    }
+
+    /* Table */
+    .table-container {
+      background:#fff;
+      border-radius:8px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.05);
+      overflow:hidden;
+    }
+    .organizations-table {
+      width:100%;
+      border-collapse:collapse;
+    }
+    .organizations-table th, .organizations-table td {
+      padding:12px 16px;
+      border-bottom:1px solid #e1e5eb;
+    }
+    .organizations-table th {
+      background:#f5f7fa;
+      text-align:left;
+      font-weight:600;
+      color:#34495e;
+      cursor:pointer;
+      position:relative;
+    }
+    .organizations-table th:hover { background:#e1e5eb; }
+    .sort-icon {
+      font-size:16px;
+      margin-left:4px;
+      vertical-align:middle;
+    }
+    .organizations-table tr:last-child td { border-bottom:none; }
+    .organizations-table a {
+      color:#D25B40;
+      text-decoration:none;
+      font-weight:500;
+    }
+    .organizations-table a:hover { text-decoration:underline; }
+    .no-results {
+      text-align:center;
+      padding:32px;
+      color:#7f8c8d;
+    }
+
+    /* Status Bar */
+    .status-bar {
+      position:fixed;
+      bottom:0; left:0; right:0;
+      background:#fff;
+      padding:12px 24px;
+      box-shadow:0 -2px 4px rgba(0,0,0,0.05);
+      display:flex; justify-content:flex-end; align-items:center;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-container">
+          <!-- full logo -->
+          <svg class="logo" id="full-logo" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <!-- SVG path data copied from your creatives -->
+            <path d="M0 0 C2.85918357 … 0 0 Z" fill="#D25B40"/>
+            <path d="M0 0 C-1.61546366 … 0 0 Z" fill="#D25B40"/>
+          </svg>
+          <!-- small logo -->
+          <svg class="logo-small" id="small-logo" style="display:none" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0 C2.85918357 … 0 0 Z" fill="#D25B40"/>
+            <path d="M0 0 C-1.61546366 … 0 0 Z" fill="#D25B40"/>
+          </svg>
+        </div>
+        <button class="toggle-btn" onclick="toggleSidebar()">
+          <i class="material-icons">chevron_left</i>
+        </button>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item active" onclick="navigateTo('organizations')">
+          <i class="material-icons">domain</i><span class="menu-text">Organizations</span>
+        </div>
+        <div class="menu-item" onclick="navigateTo('campaigns')">
+          <i class="material-icons">description</i><span class="menu-text">Campaigns</span>
+        </div>
+        <div class="menu-item" onclick="navigateTo('creatives')">
+          <i class="material-icons">palette</i><span class="menu-text">Creatives</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="organizations-container">
+        <div class="header">
+          <h1>Organizations</h1>
+          <button class="add-button">
+            <i class="material-icons">add</i>Add Organization
+          </button>
+        </div>
+
+        <div class="search-section">
+          <div class="search-container">
+            <i class="material-icons search-icon">search</i>
+            <input
+              type="text"
+              id="search-input"
+              class="search-input"
+              placeholder="Search organizations..."
+              oninput="filterOrganizations()"
+            />
+          </div>
+          <div class="facet-filters">
+            <div class="facet">
+              <label>Type:</label>
+              <div class="facet-options">
+                <div class="facet-option selected" data-type="All" onclick="toggleTypeFilter('All')">All</div>
+                <div class="facet-option" data-type="Media Partner" onclick="toggleTypeFilter('Media Partner')">Media Partner</div>
+                <div class="facet-option" data-type="Platform" onclick="toggleTypeFilter('Platform')">Platform</div>
+                <div class="facet-option" data-type="Sponsor" onclick="toggleTypeFilter('Sponsor')">Sponsor</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="organizations-table">
+            <thead>
+              <tr>
+                <th onclick="sortBy('name')">
+                  Organization Name
+                  <i id="name-sort-icon" class="material-icons sort-icon">arrow_upward</i>
+                </th>
+                <th onclick="sortBy('type')">
+                  Type
+                  <i id="type-sort-icon" class="material-icons sort-icon" style="display:none"></i>
+                </th>
+                <th onclick="sortBy('lastEdited')">
+                  Date Last Edited
+                  <i id="date-sort-icon" class="material-icons sort-icon" style="display:none"></i>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="organizations-tbody">
+              <!-- populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar"></div>
+  </div>
+
+  <script>
+    // Sample data
+    const organizations = [
+      { id:1, name:'World Wildlife Fund', type:'Sponsor', lastEdited:new Date(2025,3,28) },
+      { id:2, name:'The New York Times', type:'Media Partner', lastEdited:new Date(2025,3,27) },
+      { id:3, name:'Facebook', type:'Platform', lastEdited:new Date(2025,3,25) },
+      // … up to 20 …
+    ];
+
+    // State
+    let filteredOrgs = [...organizations];
+    let searchQuery = '';
+    let selectedTypes = ['All'];
+    let sortCol = 'name';
+    let sortDir = 'asc';
+    let sidebarCollapsed = false;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTable();
+    });
+
+    function toggleSidebar() {
+      sidebarCollapsed = !sidebarCollapsed;
+      document.getElementById('sidebar')
+        .classList.toggle('collapsed', sidebarCollapsed);
+      document.querySelectorAll('.menu-text')
+        .forEach(el=>el.style.display = sidebarCollapsed?'none':'block');
+      document.querySelector('.logo').style.display = sidebarCollapsed?'none':'block';
+      document.querySelector('.logo-small').style.display = sidebarCollapsed?'block':'none';
+      document.querySelector('.toggle-btn i').textContent =
+        sidebarCollapsed?'chevron_right':'chevron_left';
+    }
+
+    function navigateTo(tab) {
+      document.querySelectorAll('.menu-item')
+        .forEach(item=>item.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      console.log('Navigate to', tab);
+    }
+
+    function toggleTypeFilter(type) {
+      if (type==='All') selectedTypes=['All'];
+      else {
+        selectedTypes = selectedTypes.filter(t=>'All'!==t);
+        if (selectedTypes.includes(type))
+          selectedTypes = selectedTypes.filter(t=>t!==type);
+        else selectedTypes.push(type);
+        if (!selectedTypes.length) selectedTypes=['All'];
+      }
+      document.querySelectorAll('[data-type]').forEach(opt=>{
+        const t=opt.getAttribute('data-type');
+        opt.classList.toggle('selected', selectedTypes.includes(t));
+      });
+      filterOrganizations();
+    }
+
+    function filterOrganizations() {
+      searchQuery = document.getElementById('search-input').value.toLowerCase();
+      filteredOrgs = organizations.filter(o=>{
+        const matchSearch = !searchQuery|| o.name.toLowerCase().includes(searchQuery);
+        const matchType = selectedTypes.includes('All')|| selectedTypes.includes(o.type);
+        return matchSearch&& matchType;
+      });
+      applySort();
+      renderTable();
+    }
+
+    function sortBy(col) {
+      if (sortCol===col) sortDir = sortDir==='asc'?'desc':'asc';
+      else { sortCol=col; sortDir='asc'; }
+      document.querySelectorAll('.sort-icon').forEach(ic=>ic.style.display='none');
+      const id = col==='lastEdited'?'date':col;
+      const icon = document.getElementById(`${id}-sort-icon`);
+      icon.style.display='inline';
+      icon.textContent = sortDir==='asc'?'arrow_upward':'arrow_downward';
+      applySort();
+      renderTable();
+    }
+
+    function applySort() {
+      filteredOrgs.sort((a,b)=>{
+        let res=0;
+        if (sortCol==='name'||sortCol==='type') {
+          res = a[sortCol].localeCompare(b[sortCol]);
+        } else {
+          res = a.lastEdited - b.lastEdited;
+        }
+        return sortDir==='asc'?res:-res;
+      });
+    }
+
+    function formatDate(d) {
+      return `${d.getMonth()+1}-${d.getDate()}-${d.getFullYear()}`;
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('organizations-tbody');
+      if (filteredOrgs.length===0) {
+        tbody.innerHTML = `<tr><td colspan="3" class="no-results">
+          No organizations found matching your criteria.
+        </td></tr>`;
+        return;
+      }
+      tbody.innerHTML = filteredOrgs.map(o=>`
+        <tr>
+          <td><a href="#/organizations/${o.id}">${o.name}</a></td>
+          <td>${o.type}</td>
+          <td>${formatDate(o.lastEdited)}</td>
+        </tr>
+      `).join('');
+    }
+  </script>
+</body>
+</html>
