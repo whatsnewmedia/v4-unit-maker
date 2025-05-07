@@ -59,6 +59,8 @@
     .status-unpublished { background:#f9eadb; color:#cd6c35; }
     .no-results { text-align:center; padding:32px 16px; color:#7f8c8d; }
     .status-bar { position:fixed; bottom:0; left:0; right:0; background:#fff; padding:12px 24px; box-shadow:0 -2px 4px rgba(0,0,0,0.05); display:flex; justify-content:flex-end; align-items:center; z-index:100; }
+    .creative-count { display:inline-block; color:#D25B40; font-weight:500; cursor:pointer; }
+    .creative-count:hover { text-decoration:underline; }
   </style>
 </head>
 <body>
@@ -67,8 +69,13 @@
     <div class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <div class="logo-container">
-          <svg class="logo" id="full-logo" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">…</svg>
-          <svg class="logo-small" id="small-logo" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">…</svg>
+          <svg class="logo" id="full-logo" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0 C2.85918357 0.00564291 5.7183612 0.00846166 8.57754898 0.0110817 C34.83590854 0.04606629 60.98527672 0.25878658 87.11999893 3.06482315 C89.64760689 3.33334994 92.17643159 3.58684256 94.70581436 3.83807755 C176.94951663 12.07914255 258.46410111 31.16180927 355.50366592 69.31805801 C356.12809586 69.58084549 356.75252579 69.84363297 357.39587784 70.1143837 C395.64867934 86.22101792 432.26401992 105.13919309 468.50366592 125.31805801 C469.15170953 195.89260245 469.15170953 195.89260245 465.73151016 228.15863419 C465.50265258 230.3276621 465.28319632 232.49747546 465.06567764 234.66766739 C457.14316332 312.91634933 438.09834638 390.32775299 379.50366592 527.31805801 C379.07440811 528.20525528 378.6451503 529.09245255 378.20288467 530.00653458 C371.53027606 543.77011378 364.17088048 557.0854955 356.50366592 570.31805801 C355.70074112 571.70710342 355.70074112 571.70710342 354.88159561 573.12421036 C343.93522207 592.00887 332.40247587 610.5229084 319.85571671 628.38934708 C318.46867985 630.36796592 317.09315499 632.3542521 315.71850967 634.34149551 C304.15749271 650.97678721 291.78051699 666.99896212 278.89526749 682.62665176 C276.89748474 685.05483402 274.92185169 687.50092216 272.94116592 689.94305801 C264.77890046 699.89268088 256.37243456 709.58724408 247.58569717 718.98993301 C245.14277353 721.60643929 242.76122591 724.27307321 240.38159561 726.9472084 C235.85739913 731.97693696 231.1637774 736.80316302 226.37475967 741.57977676 C225.54082184 742.41467133 224.706884 743.24956589 223.84767532 744.10976028 C222.10019966 745.85791082 220.3514832 747.60482187 218.60156631 749.35052872 C215.94082565 752.0058976 213.28548662 754.66658419 210.63061905 757.32782364 C208.92065322 759.03712883 207.2103773 760.74612388 205.49975967 762.45477676 C204.71620605 763.24035461 203.93265244 764.02593246 203.12535477 764.8353157 C198.95233445 768.9908243 194.70163839 772.99160279 190.2322731 776.82756424 C187.65505577 779.04977322 185.18124215 781.37363037 182.69116592 783.69305801 C178.07067043 787.96200996 173.31259841 791.99837096 168.40991592 795.94305801 C165.702344 798.15569744 163.05219745 800.41911621 160.41113663 802.70990372 C153.93535832 808.32531975 147.30575217 813.67333114 140.46069717 818.83368301 C138.20461967 820.54487953 135.96342129 822.27467161 133.72241592 824.00555801 C99.76945323 850.17038227 63.7875265 873.39852627 26.54321671 894.57733536 C23.70240131 896.20424409 20.8803047 897.85914426 18.06225967 899.52508926 C16.45964017 900.45650068 14.85679271 901.38752 13.25366592 902.31805801 C12.54572891 902.74562393 11.8377919 903.17318985 11.10840225 903.61371231 C6.67804613 906.14898401 4.40083033 906.54623094 -0.49633408 905.31805801 C-3.47460556 903.95795059 -3.47460556 903.95795059 -6.61742783 902.21258926 C-7.47616249 901.73942528 -7.47616249 901.73942528 -8.35224533 901.25670242 C-10.21830995 900.22426467 -12.07629814 899.1782525 -13.93383408 898.13055801 C-15.24071659 897.40059055 -16.54768379 896.67077469 -17.85473251 895.94110489 C-29.585856 889.36514911 -41.10728431 882.47017318 -52.49633408 875.31805801 C-53.51711044 874.67868301 -54.53788681 874.03930801 -55.58959579 873.38055801 C-69.85039239 864.42300199 -83.80353083 855.11991612 -97.49633408 845.31805801 C-99.03138761 844.22806959 -100.56654285 843.13822439 -102.10180283 842.04852676 C-122.43353006 827.55460055 -141.91047693 811.91241898 -160.88549423 795.69061661 C-162.53528091 794.28487233 -164.19288152 792.88878693 -165.85180283 791.49383926 C-174.33946711 784.32811332 -182.45922661 776.8210036 -190.52025986 769.18085098 C-192.40620378 767.40302147 -194.3050317 765.64059198 -196.21117783 763.88446426 C-203.27536893 757.37091297 -210.19007489 750.72631837 -216.99633408 743.94305801 C-217.73802841 743.20595596 -218.47972275 742.46885391 -219.24389267 741.70941544 C-223.30277287 737.6390591 -227.19108747 733.48020091 -230.92211533 729.10663223 C-232.54431779 727.26354054 -234.24347012 725.5366481 -235.99633408 723.81805801 C-239.03228332 720.82933465 -241.84142066 717.70099322 -244.62133408 714.47430801 C-246.66992501 712.11842844 -248.76836409 709.81298341 -250.87133408 707.50555801 C-254.76996804 703.18545011 -258.47137265 698.7373442 -262.12914658 694.21258926 C-264.18043578 691.7043297 -266.27100735 689.23667368 -268.38378525 686.78021622 C-274.89763145 679.19259498 -280.9541302 671.29050244 -286.98119736 663.31366348 C-288.3383681 661.52611696 -289.70730967 659.74904494 -291.08617783 657.97821426 C-343.93369145 590.05588314 -384.98306071 512.42028392 -450.49633408 291.31805801 C-450.61323593 290.62508621 -450.73013779 289.93211441 -450.85058212 289.21814346 C-453.62304608 272.74783607 -455.85001481 256.23103155 -457.68383408 239.63055801 C-457.7627388 238.92882462 -457.84164352 238.22709122 -457.9229393 237.50409317 C-460.84412477 211.22155014 -461.79682506 185.07761507 -461.63366318 158.66302872 C-461.61265381 154.88009401 -461.60395581 151.09712882 -461.59399033 147.31415176 C-461.57297671 139.98204273 -461.53916707 132.65007569 -461.49633408 125.31805801 C-460.76697647 124.92603195 -460.03761887 124.53400589 -459.28615952 124.13010025 C-456.52355128 122.64486607 -453.76121543 121.15912677 -450.99905014 119.673069 C-449.23833787 118.72598566 -447.47732538 117.77946051 -445.71630478 116.83295059 C-439.4107517 113.44005824 -433.11887877 110.02481963 -426.85178757 106.56135941 C-384.98177829 83.4644571 -340.70809196 64.8024224 -295.49633408 49.31805801 C-293.75005722 48.71018448 -293.75005722 48.71018448 -291.96850204 48.09003067 C-271.38126496 40.9298594 -250.57783287 34.83869761 -229.49633408 29.31805801 C-228.37228165 29.0235173 -228.37228165 29.0235173 -227.22552109 28.72302628 C-182.37200889 17.01688911 -136.59919612 8.87630682 -90.49633408 4.06805801 C-89.76725845 3.99083511 -89.03818283 3.91361221 -88.28701401 3.83404922 C-82.69605842 3.25070598 -77.09978535 2.76453606 -71.49633408 2.31805801 C-69.87726654 2.18725342 -69.87726654 2.18725342 -68.22549057 2.0538063 C-45.48169665 0.27607068 -22.80496284 -0.04571824 0 0 Z" fill="#D25B40" transform="translate(505.49633407592773,65.68194198608398)"/>
+            <path d="M0 0 C-1.61546366 10.28440249 -4.21978129 20.32098156 -6.7421875 30.41015625 C-7.22288495 32.34410788 -7.703233 34.27814638 -8.18325806 36.21226501 C-9.2085014 40.34093611 -10.23567454 44.46912006 -11.2644043 48.59692383 C-13.72607037 58.47562716 -16.17689818 68.35702116 -18.62773895 78.23841476 C-19.18486409 80.48459952 -19.74210047 82.73075669 -20.29944611 84.97688675 C-25.75644337 106.97082705 -31.14334127 128.98143687 -36.5 151 C-38.10901222 157.61206748 -39.71842255 164.22403803 -41.328125 170.8359375 C-41.52210751 171.63283808 -41.71609001 172.42973866 -41.91595078 173.25078773 C-48.55348321 200.51457917 -55.28226818 227.75586538 -62 255 C-19.76 255 22.48 255 66 255 C66 255.66 66 256.32 66 257 C64.65429688 258.32226562 64.65429688 258.32226562 62.71875 259.90625 C59.14391798 262.94611596 55.77161856 266.13841825 52.46875 269.46875 C51.9843042 269.95649902 51.4998584 270.44424805 51.00073242 270.94677734 C49.49849478 272.46256197 47.99880899 273.98082544 46.5 275.5 C35.46210692 286.68787416 35.46210692 286.68787416 31.03125 290.46875 C25.36901187 295.30633396 20.22820892 300.704018 15 306 C9.17578649 311.89971257 3.38944286 317.75904721 -2.921875 323.14453125 C-7.65565228 327.3711181 -12.04425558 331.98371166 -16.5 336.5 C-22.15226717 342.22906924 -27.78057137 347.89509328 -33.90429688 353.12695312 C-38.64236276 357.36162711 -43.03822375 361.97759787 -47.5 366.5 C-53.15226717 372.22906924 -58.78057137 377.89509328 -64.90429688 383.12695312 C-69.64236276 387.36162711 -74.03822375 391.97759787 -78.5 396.5 C-89.53789308 407.68787416 -89.53789308 407.68787416 -93.96875 411.46875 C-99.63098813 416.30633396 -104.77179108 421.704018 -110 427 C-115.82421351 432.89971257 -121.61055714 438.75904721 -127.921875 444.14453125 C-132.65565228 448.3711181 -137.04425558 452.98371166 -141.5 457.5 C-147.15226717 463.22906924 -152.78057137 468.89509328 -158.90429688 474.12695312 C-163.64236276 478.36162711 -168.03822375 482.97759787 -172.5 487.5 C-178.15226717 493.22906924 -183.78057137 498.89509328 -189.90429688 504.12695312 C-194.64236276 508.36162711 -199.03822375 512.97759787 -203.5 517.5 C-214.53859683 528.68858747 -214.53859683 528.68858747 -218.96484375 532.4609375 C-222.40450038 535.39862833 -225.60600228 538.5436604 -228.78515625 541.7578125 C-229.29505096 542.27321594 -229.80494568 542.78861938 -230.33029175 543.31964111 C-232.4433571 545.46032041 -234.55273633 547.60454635 -236.6574707 549.75341797 C-247.61341207 560.92345451 -247.61341207 560.92345451 -254 565 C-252.75623677 557.7499754 -251.26671705 550.61190839 -249.49169922 543.47436523 C-249.24662313 542.47728861 -249.00154705 541.48021198 -248.74904442 540.45292091 C-247.93738481 537.15403292 -247.12102702 533.85632648 -246.3046875 530.55859375 C-245.72232843 528.19534247 -245.1402845 525.83201352 -244.55853271 523.46861267 C-243.31558565 518.42162206 -242.0707103 513.37511149 -240.82403564 508.32904053 C-238.86161939 500.38570751 -236.90374173 492.44125972 -234.94677734 484.49658203 C-234.44967038 482.47858714 -233.95255703 480.46059383 -233.45544183 478.44260097 C-233.1226364 477.09160346 -232.78983721 475.74060442 -232.45704424 474.38960385 C-231.45084375 470.30499925 -230.44425909 466.22048954 -229.43736756 462.13605523 C-224.93807501 443.88472205 -220.45269539 425.6300398 -215.984375 407.37109375 C-215.57379789 405.6934472 -215.57379789 405.6934472 -215.1549263 403.9819088 C-212.81252963 394.40993063 -210.4714723 384.83762514 -208.13128662 375.2651062 C-206.9461026 370.41717265 -205.76027419 365.56939707 -204.57407379 360.72171211 C-203.95269735 358.18138545 -203.33211868 355.640865 -202.71160889 353.10032654 C-199.1929826 338.72001095 -195.59079826 324.36319306 -192 310 C-234.24 310 -276.48 310 -320 310 C-318.32764893 306.65529786 -317.33371704 305.08492199 -314.8046875 302.57421875 C-314.17046875 301.94193359 -313.53625 301.30964844 -312.8828125 300.65820312 C-312.22023438 300.00787109 -311.55765625 299.35753906 -310.875 298.6875 C-309.9159375 297.7294043 -309.9159375 297.7294043 -308.9375 296.75195312 C-305.78930104 293.63220175 -302.59559514 290.61848404 -299.2265625 287.73828125 C-293.69580462 282.95902167 -288.63008406 277.69979079 -283.5 272.5 C-277.84773283 266.77093076 -272.21942863 261.10490672 -266.09570312 255.87304688 C-261.35763724 251.63837289 -256.96177625 247.02240213 -252.5 242.5 C-246.84773283 236.77093076 -241.21942863 231.10490672 -235.09570312 225.87304688 C-230.35763724 221.63837289 -225.96177625 217.02240213 -221.5 212.5 C-215.84773283 206.77093076 -210.21942863 201.10490672 -204.09570312 195.87304688 C-199.35763724 191.63837289 -194.96177625 187.02240213 -190.5 182.5 C-184.84773283 176.77093076 -179.21942863 171.10490672 -173.09570312 165.87304688 C-168.35763724 161.63837289 -163.96177625 157.02240213 -159.5 152.5 C-153.84773283 146.77093076 -148.21942863 141.10490672 -142.09570312 135.87304688 C-137.35763724 131.63837289 -132.96177625 127.02240213 -128.5 122.5 C-122.84773283 116.77093076 -117.21942863 111.10490672 -111.09570312 105.87304688 C-106.35763724 101.63837289 -101.96177625 97.02240213 -97.5 92.5 C-91.84773283 86.77093076 -86.21942863 81.10490672 -80.09570312 75.87304688 C-75.35763724 71.63837289 -70.96177625 67.02240213 -66.5 62.5 C-60.84773283 56.77093076 -55.21942863 51.10490672 -49.09570312 45.87304688 C-44.35763724 41.63837289 -39.96177625 37.02240213 -35.5 32.5 C-29.76550495 26.68758557 -24.0556765 20.92928608 -17.84082031 15.62255859 C-13.93684059 12.18146453 -10.37639659 8.37447949 -6.76171875 4.63476562 C-6.17261719 4.03470703 -5.58351563 3.43464844 -4.9765625 2.81640625 C-4.45143066 2.27443604 -3.92629883 1.73246582 -3.38525391 1.17407227 C-2 0 -2 0 0 0 Z" fill="#D25B40" transform="translate(636,194)"/>
+          </svg>
+          <svg class="logo-small" id="small-logo" style="display: none;" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0 C-1.61546366 10.28440249 -4.21978129 20.32098156 -6.7421875 30.41015625 C-7.22288495 32.34410788 -7.703233 34.27814638 -8.18325806 36.21226501 C-9.2085014 40.34093611 -10.23567454 44.46912006 -11.2644043 48.59692383 C-13.72607037 58.47562716 -16.17689818 68.35702116 -18.62773895 78.23841476 C-19.18486409 80.48459952 -19.74210047 82.73075669 -20.29944611 84.97688675 C-25.75644337 106.97082705 -31.14334127 128.98143687 -36.5 151 C-38.10901222 157.61206748 -39.71842255 164.22403803 -41.328125 170.8359375 C-41.52210751 171.63283808 -41.71609001 172.42973866 -41.91595078 173.25078773 C-48.55348321 200.51457917 -55.28226818 227.75586538 -62 255 C-19.76 255 22.48 255 66 255 C66 255.66 66 256.32 66 257 C64.65429688 258.32226562 64.65429688 258.32226562 62.71875 259.90625 C59.14391798 262.94611596 55.77161856 266.13841825 52.46875 269.46875 C51.9843042 269.95649902 51.4998584 270.44424805 51.00073242 270.94677734 C49.49849478 272.46256197 47.99880899 273.98082544 46.5 275.5 C35.46210692 286.68787416 35.46210692 286.68787416 31.03125 290.46875 C25.36901187 295.30633396 20.22820892 300.704018 15 306 C9.17578649 311.89971257 3.38944286 317.75904721 -2.921875 323.14453125 C-7.65565228 327.3711181 -12.04425558 331.98371166 -16.5 336.5 C-22.15226717 342.22906924 -27.78057137 347.89509328 -33.90429688 353.12695312 C-38.64236276 357.36162711 -43.03822375 361.97759787 -47.5 366.5 C-53.15226717 372.22906924 -58.78057137 377.89509328 -64.90429688 383.12695312 C-69.64236276 387.36162711 -74.03822375 391.97759787 -78.5 396.5 C-89.53789308 407.68787416 -89.53789308 407.68787416 -93.96875 411.46875 C-99.63098813 416.30633396 -104.77179108 421.704018 -110 427 C-115.82421351 432.89971257 -121.61055714 438.75904721 -127.921875 444.14453125 C-132.65565228 448.3711181 -137.04425558 452.98371166 -141.5 457.5 C-147.15226717 463.22906924 -152.78057137 468.89509328 -158.90429688 474.12695312 C-163.64236276 478.36162711 -168.03822375 482.97759787 -172.5 487.5 C-178.15226717 493.22906924 -183.78057137 498.89509328 -189.90429688 504.12695312 C-194.64236276 508.36162711 -199.03822375 512.97759787 -203.5 517.5 C-214.53859683 528.68858747 -214.53859683 528.68858747 -218.96484375 532.4609375 C-222.40450038 535.39862833 -225.60600228 538.5436604 -228.78515625 541.7578125 C-229.29505096 542.27321594 -229.80494568 542.78861938 -230.33029175 543.31964111 C-232.4433571 545.46032041 -234.55273633 547.60454635 -236.6574707 549.75341797 C-247.61341207 560.92345451 -247.61341207 560.92345451 -254 565 C-252.75623677 557.7499754 -251.26671705 550.61190839 -249.49169922 543.47436523 C-249.24662313 542.47728861 -249.00154705 541.48021198 -248.74904442 540.45292091 C-247.93738481 537.15403292 -247.12102702 533.85632648 -246.3046875 530.55859375 C-245.72232" fill="#D25B40" transform="translate(636,194)"/>
+          </svg>
         </div>
         <button class="toggle-btn" onclick="toggleSidebar()">
           <i class="material-icons">chevron_left</i>
@@ -144,6 +151,9 @@
                 <th onclick="sortBy('status')">
                   Status <i id="status-sort-icon" class="material-icons sort-icon">arrow_upward</i>
                 </th>
+                <th onclick="sortBy('creativeCount')">
+                  Creative Count <i id="creativeCount-sort-icon" class="material-icons sort-icon">arrow_upward</i>
+                </th>
                 <th onclick="sortBy('dateCreated')">
                   Date Created <i id="dateCreated-sort-icon" class="material-icons sort-icon">arrow_upward</i>
                 </th>
@@ -164,124 +174,171 @@
   </div>
 
   <script>
-    // Populate with your sample rows
+    // Campaign data
+    const campaigns = [
+      { id: 1, name: 'Save the Polar Bears', sponsor: 'World Wildlife Fund', status: 'Published', creativeCount: 5, dateCreated: new Date(2025, 1, 15), lastEdited: new Date(2025, 3, 28) },
+      { id: 2, name: 'Forest Conservation', sponsor: 'World Wildlife Fund', status: 'Unpublished', creativeCount: 3, dateCreated: new Date(2025, 2, 10), lastEdited: new Date(2025, 3, 25) },
+      { id: 3, name: 'Emergency Relief Fund', sponsor: 'Doctors Without Borders', status: 'Published', creativeCount: 7, dateCreated: new Date(2025, 2, 18), lastEdited: new Date(2025, 3, 26) },
+      { id: 4, name: 'Medical Aid Initiative', sponsor: 'Doctors Without Borders', status: 'Unpublished', creativeCount: 2, dateCreated: new Date(2025, 2, 5), lastEdited: new Date(2025, 3, 23) },
+      { id: 5, name: 'Clean Water Project', sponsor: 'UNICEF', status: 'Published', creativeCount: 8, dateCreated: new Date(2025, 1, 20), lastEdited: new Date(2025, 3, 27) },
+      { id: 6, name: 'Education for All', sponsor: 'UNICEF', status: 'Published', creativeCount: 4, dateCreated: new Date(2025, 2, 22), lastEdited: new Date(2025, 3, 24) },
+      { id: 7, name: 'Disaster Response', sponsor: 'American Red Cross', status: 'Published', creativeCount: 6, dateCreated: new Date(2025, 1, 25), lastEdited: new Date(2025, 3, 22) },
+      { id: 8, name: 'Blood Donation Drive', sponsor: 'American Red Cross', status: 'Unpublished', creativeCount: 3, dateCreated: new Date(2025, 2, 15), lastEdited: new Date(2025, 3, 21) },
+      { id: 9, name: 'Ocean Cleanup', sponsor: 'World Wildlife Fund', status: 'Published', creativeCount: 5, dateCreated: new Date(2025, 1, 5), lastEdited: new Date(2025, 3, 20) },
+      { id: 10, name: 'Species Protection', sponsor: 'World Wildlife Fund', status: 'Unpublished', creativeCount: 2, dateCreated: new Date(2025, 0, 12), lastEdited: new Date(2025, 3, 19) },
+      { id: 11, name: 'Healthcare Access', sponsor: 'Doctors Without Borders', status: 'Published', creativeCount: 4, dateCreated: new Date(2025, 0, 20), lastEdited: new Date(2025, 3, 18) },
+      { id: 12, name: 'Vaccine Distribution', sponsor: 'Doctors Without Borders', status: 'Unpublished', creativeCount: 3, dateCreated: new Date(2025, 1, 10), lastEdited: new Date(2025, 3, 17) },
+      { id: 13, name: 'Child Nutrition', sponsor: 'UNICEF', status: 'Published', creativeCount: 6, dateCreated: new Date(2025, 0, 15), lastEdited: new Date(2025, 3, 16) },
+      { id: 14, name: 'Shelter Aid', sponsor: 'American Red Cross', status: 'Published', creativeCount: 7, dateCreated: new Date(2025, 0, 8), lastEdited: new Date(2025, 3, 15) },
+      { id: 15, name: 'First Aid Training', sponsor: 'American Red Cross', status: 'Unpublished', creativeCount: 1, dateCreated: new Date(2025, 0, 5), lastEdited: new Date(2025, 3, 14) }
+    ];
+    
+    // State for filtering and sorting
+    let filteredCampaigns = [...campaigns];
+    let searchQuery = '';
+    let selectedStatus = 'All';
+    let dateCreatedFrom = null;
+    let dateCreatedTo = null;
+    let dateEditedFrom = null;
+    let dateEditedTo = null;
+    let sortColumn = 'name';
+    let sortDirection = 'asc';
+    
+    // Format date for display
+    function formatDate(date) {
+      return `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
+    }
+    
+    // Parse date string from input field
+    function parseInputDate(dateString) {
+      if (!dateString) return null;
+      return new Date(dateString);
+    }
+    
+    // Render campaigns table
     function renderCampaigns() {
       const tbody = document.getElementById('campaigns-tbody');
-      tbody.innerHTML = `
+      
+      if (filteredCampaigns.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="no-results">
+              No campaigns found matching your search criteria.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      tbody.innerHTML = filteredCampaigns.map(campaign => `
         <tr>
-          <td><a href="#/campaigns/1">Save the Polar Bears</a></td>
-          <td><a href="#/sponsors/world-wildlife-fund">World Wildlife Fund</a></td>
-          <td><span class="status-badge status-published">Published</span></td>
-          <td>2-15-2025</td>
-          <td>4-28-2025</td>
+          <td><a href="#/campaigns/${campaign.id}">${campaign.name}</a></td>
+          <td><a href="#/sponsors/${campaign.sponsor.replace(/\s+/g, '-').toLowerCase()}">${campaign.sponsor}</a></td>
+          <td><span class="status-badge status-${campaign.status.toLowerCase()}">${campaign.status}</span></td>
+          <td><a href="#/campaigns/${campaign.id}/creatives" class="creative-count">${campaign.creativeCount}</a></td>
+          <td>${formatDate(campaign.dateCreated)}</td>
+          <td>${formatDate(campaign.lastEdited)}</td>
         </tr>
-        <tr>
-          <td><a href="#/campaigns/2">Forest Conservation</a></td>
-          <td><a href="#/sponsors/world-wildlife-fund">World Wildlife Fund</a></td>
-          <td><span class="status-badge status-unpublished">Unpublished</span></td>
-          <td>3-10-2025</td>
-          <td>4-25-2025</td>
-        </tr>
-        <tr>
-          <td><a href="#/campaigns/3">Emergency Relief Fund</a></td>
-          <td><a href="#/sponsors/doctors-without-borders">Doctors Without Borders</a></td>
-          <td><span class="status-badge status-published">Published</span></td>
-          <td>3-18-2025</td>
-          <td>4-26-2025</td>
-        </tr>
-        <tr>
-          <td><a href="#/campaigns/4">Medical Aid Initiative</a></td>
-          <td><a href="#/sponsors/doctors-without-borders">Doctors Without Borders</a></td>
-          <td><span class="status-badge status-unpublished">Unpublished</span></td>
-          <td>3-5-2025</td>
-          <td>4-23-2025</td>
-        </tr>
-        <tr>
-          <td><a href="#/campaigns/5">Clean Water Project</a></td>
-          <td><a href="#/sponsors/unicef">UNICEF</a></td>
-          <td><span class="status-badge status-published">Published</span></td>
-          <td>2-20-2025</td>
-          <td>4-27-2025</td>
-        </tr>
-        <tr>
-          <td><a href="#/campaigns/6">Education for All</a></td>
-          <td><a href="#/sponsors/unicef">UNICEF</a></td>
-          <td><span class="status-badge status-published">Published</span></td>
-          <td>3-22-2025</td>
-          <td>4-24-2025</td>
-        </tr>
-        <tr>
-          <td><a href="#/campaigns/7">Disaster Response</a></td>
-          <td><a href="#/sponsors/american-red-cross">American Red Cross</a></td>
-          <td><span class="status-badge status-published">Published</span></td>
-          <td>2-25-2025</td>
-          <td>4-22-2025</td>
-        </tr>
-        <tr>
-          <td><a href="#/campaigns/8">Blood Donation Drive</a></td>
-          <td><a href="#/sponsors/american-red-cross">American Red Cross</a></td>
-          <td><span class="status-badge status-unpublished">Unpublished</span></td>
-          <td>3-15-2025</td>
-          <td>4-21-2025</td>
-        </tr>
-        <tr>
-          <td><a href="#/campaigns/9">Ocean Cleanup</a></td>
-          <td><a href="#/sponsors/world-wildlife-fund">World Wildlife Fund</a></td>
-          <td><span class="status-badge status-published">Published</span></td>
-          <td>2-5-2025</td>
-          <td>4-20-2025</td>
-        </tr>
-        <tr>
-          <td><a href="#/campaigns/10">Species Protection</a></td>
-          <td><a href="#/sponsors/world-wildlife-fund">World Wildlife Fund</a></td>
-          <td><span class="status-badge status-unpublished">Unpublished</span></td>
-          <td>1-12-2025</td>
-          <td>4-19-2025</td>
-        </tr>
-        <tr>
-          <td><a href="#/campaigns/11">Healthcare Access</a></td>
-          <td><a href="#/sponsors/doctors-without-borders">Doctors Without Borders</a></td>
-          <td><span class="status-badge status-published">Published</span></td>
-          <td>1-20-2025</td>
-          <td>4-18-2025</td>
-        </tr>
-        <tr>
-          <td><a href="#/campaigns/12">Vaccine Distribution</a></td>
-          <td><a href="#/sponsors/doctors-without-borders">Doctors Without Borders</a></td>
-          <td><span class="status-badge status-unpublished">Unpublished</span></td>
-          <td>2-10-2025</td>
-          <td>4-17-2025</td>
-        </tr>
-        <tr>
-          <td><a href="#/campaigns/13">Child Nutrition</a></td>
-          <td><a href="#/sponsors/unicef">UNICEF</a></td>
-          <td><span class="status-badge status-published">Published</span></td>
-          <td>1-15-2025</td>
-          <td>4-16-2025</td>
-        </tr>
-        <tr>
-          <td><a href="#/campaigns/14">Shelter Aid</a></td>
-          <td><a href="#/sponsors/american-red-cross">American Red Cross</a></td>
-          <td><span class="status-badge status-published">Published</span></td>
-          <td>1-8-2025</td>
-          <td>4-15-2025</td>
-        </tr>
-        <tr>
-          <td><a href="#/campaigns/15">First Aid Training</a></td>
-          <td><a href="#/sponsors/american-red-cross">American Red Cross</a></td>
-          <td><span class="status-badge status-unpublished">Unpublished</span></td>
-          <td>1-5-2025</td>
-          <td>4-14-2025</td>
-        </tr>
-      `;
+      `).join('');
     }
-
-    // Initialize table on load
-    document.addEventListener('DOMContentLoaded', function() {
+    
+    // Filter campaigns based on all criteria
+    function filterCampaigns() {
+      searchQuery = document.getElementById('search-input').value.toLowerCase();
+      dateCreatedFrom = parseInputDate(document.getElementById('date-created-from').value);
+      dateCreatedTo = parseInputDate(document.getElementById('date-created-to').value);
+      dateEditedFrom = parseInputDate(document.getElementById('date-edited-from').value);
+      dateEditedTo = parseInputDate(document.getElementById('date-edited-to').value);
+      
+      filteredCampaigns = campaigns.filter(campaign => {
+        // Filter by search query
+        const matchesSearch = !searchQuery || 
+          campaign.name.toLowerCase().includes(searchQuery) ||
+          campaign.sponsor.toLowerCase().includes(searchQuery);
+        
+        // Filter by status
+        const matchesStatus = selectedStatus === 'All' || campaign.status === selectedStatus;
+        
+        // Filter by date created
+        const matchesDateCreated = 
+          (!dateCreatedFrom || campaign.dateCreated >= dateCreatedFrom) && 
+          (!dateCreatedTo || campaign.dateCreated <= dateCreatedTo);
+        
+        // Filter by date edited
+        const matchesDateEdited = 
+          (!dateEditedFrom || campaign.lastEdited >= dateEditedFrom) && 
+          (!dateEditedTo || campaign.lastEdited <= dateEditedTo);
+        
+        return matchesSearch && matchesStatus && matchesDateCreated && matchesDateEdited;
+      });
+      
+      // Apply current sort
+      applySorting();
       renderCampaigns();
-    });
-
-    // Sidebar toggle
+    }
+    
+    // Toggle status filter
+    function toggleStatusFilter(status) {
+      selectedStatus = status;
+      
+      // Update UI
+      document.querySelectorAll('[data-status]').forEach(option => {
+        option.classList.toggle('selected', option.getAttribute('data-status') === status);
+      });
+      
+      filterCampaigns();
+    }
+    
+    // Sort campaigns
+    function sortBy(column) {
+      if (sortColumn === column) {
+        // Toggle sort direction
+        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+      } else {
+        // New column, default to ascending
+        sortColumn = column;
+        sortDirection = 'asc';
+      }
+      
+      // Update UI - update all sort icons direction
+      document.querySelectorAll('.sort-icon').forEach(icon => {
+        icon.textContent = sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward';
+      });
+      
+      applySorting();
+      renderCampaigns();
+    }
+    
+    // Apply sorting to filtered campaigns
+    function applySorting() {
+      filteredCampaigns.sort((a, b) => {
+        let valueA, valueB;
+        
+        // Get values based on sort column
+        if (sortColumn === 'name' || sortColumn === 'sponsor' || sortColumn === 'status') {
+          valueA = a[sortColumn];
+          valueB = b[sortColumn];
+          return sortDirection === 'asc' 
+            ? valueA.localeCompare(valueB)
+            : valueB.localeCompare(valueA);
+        } else if (sortColumn === 'creativeCount') {
+          valueA = a[sortColumn];
+          valueB = b[sortColumn];
+          return sortDirection === 'asc'
+            ? valueA - valueB
+            : valueB - valueA;
+        } else {
+          // Date columns
+          valueA = a[sortColumn].getTime();
+          valueB = b[sortColumn].getTime();
+          return sortDirection === 'asc'
+            ? valueA - valueB
+            : valueB - valueA;
+        }
+      });
+    }
+    
+    // Toggle sidebar
     let sidebarCollapsed = false;
     function toggleSidebar() {
       sidebarCollapsed = !sidebarCollapsed;
@@ -304,30 +361,25 @@
         icon.textContent='chevron_left';
       }
     }
-
-    // Navigation stub
+    
+    // Navigation
     function navigateTo(tab) {
       document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
       event.currentTarget.classList.add('active');
       console.log('Navigating to', tab);
     }
-
-    // Sort stub
-    function sortBy(col) {
-      document.querySelectorAll('.sort-icon').forEach(i=>i.textContent='arrow_upward');
-      const icon = document.getElementById(`${col==='lastEdited'?'date':'`+col+`'}-sort-icon`);
-      if(icon) icon.textContent='arrow_downward';
-    }
-
-    // Filter stub
-    function toggleStatusFilter(status) {
-      document.querySelectorAll('[data-status]').forEach(opt=>{
-        opt.classList.toggle('selected', opt.getAttribute('data-status')===status);
-      });
-    }
-    function filterCampaigns() {
-      // no-op for demo
-    }
+    
+    // Initialize table on load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initial render of campaigns
+      renderCampaigns();
+      
+      // Set up event listeners for date inputs
+      document.getElementById('date-created-from').addEventListener('change', filterCampaigns);
+      document.getElementById('date-created-to').addEventListener('change', filterCampaigns);
+      document.getElementById('date-edited-from').addEventListener('change', filterCampaigns);
+      document.getElementById('date-edited-to').addEventListener('change', filterCampaigns);
+    });
   </script>
 </body>
 </html>
