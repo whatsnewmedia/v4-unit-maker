@@ -181,6 +181,17 @@
       padding:32px;
       color:#7f8c8d;
     }
+    
+    /* Campaign Count Styling */
+    .campaign-count {
+      color: #D25B40;
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .campaign-count:hover {
+      text-decoration: underline;
+    }
 
     /* Status Bar */
     .status-bar {
@@ -272,11 +283,15 @@
                 </th>
                 <th onclick="sortBy('type')">
                   Type
-                  <i id="type-sort-icon" class="material-icons sort-icon" style="display:none"></i>
+                  <i id="type-sort-icon" class="material-icons sort-icon">arrow_upward</i>
+                </th>
+                <th onclick="sortBy('campaignCount')">
+                  Campaign Count
+                  <i id="campaign-count-sort-icon" class="material-icons sort-icon">arrow_upward</i>
                 </th>
                 <th onclick="sortBy('lastEdited')">
                   Date Last Edited
-                  <i id="date-sort-icon" class="material-icons sort-icon" style="display:none"></i>
+                  <i id="date-sort-icon" class="material-icons sort-icon">arrow_upward</i>
                 </th>
               </tr>
             </thead>
@@ -295,10 +310,14 @@
   <script>
     // Sample data
     const organizations = [
-      { id:1, name:'World Wildlife Fund', type:'Sponsor', lastEdited:new Date(2025,3,28) },
-      { id:2, name:'The New York Times', type:'Media Partner', lastEdited:new Date(2025,3,27) },
-      { id:3, name:'Facebook', type:'Platform', lastEdited:new Date(2025,3,25) },
-      // … up to 20 …
+      { id:1, name:'World Wildlife Fund', type:'Sponsor', campaignCount: 12, lastEdited:new Date(2025,3,28) },
+      { id:2, name:'The New York Times', type:'Media Partner', campaignCount: 8, lastEdited:new Date(2025,3,27) },
+      { id:3, name:'Facebook', type:'Platform', campaignCount: 15, lastEdited:new Date(2025,3,25) },
+      { id:4, name:'UNICEF', type:'Sponsor', campaignCount: 10, lastEdited:new Date(2025,3,24) },
+      { id:5, name:'Amazon', type:'Platform', campaignCount: 7, lastEdited:new Date(2025,3,22) },
+      { id:6, name:'Twitter', type:'Platform', campaignCount: 5, lastEdited:new Date(2025,3,20) },
+      { id:7, name:'Doctors Without Borders', type:'Sponsor', campaignCount: 9, lastEdited:new Date(2025,3,18) },
+      { id:8, name:'Washington Post', type:'Media Partner', campaignCount: 6, lastEdited:new Date(2025,3,16) }
     ];
 
     // State
@@ -362,10 +381,11 @@
     function sortBy(col) {
       if (sortCol===col) sortDir = sortDir==='asc'?'desc':'asc';
       else { sortCol=col; sortDir='asc'; }
-      document.querySelectorAll('.sort-icon').forEach(ic=>ic.style.display='none');
-      const id = col==='lastEdited'?'date':col;
+      document.querySelectorAll('.sort-icon').forEach(ic=>{
+        ic.textContent = 'arrow_upward';
+      });
+      const id = col==='lastEdited'?'date':(col==='campaignCount'?'campaign-count':col);
       const icon = document.getElementById(`${id}-sort-icon`);
-      icon.style.display='inline';
       icon.textContent = sortDir==='asc'?'arrow_upward':'arrow_downward';
       applySort();
       renderTable();
@@ -376,6 +396,8 @@
         let res=0;
         if (sortCol==='name'||sortCol==='type') {
           res = a[sortCol].localeCompare(b[sortCol]);
+        } else if (sortCol==='campaignCount') {
+          res = a.campaignCount - b.campaignCount;
         } else {
           res = a.lastEdited - b.lastEdited;
         }
@@ -390,15 +412,16 @@
     function renderTable() {
       const tbody = document.getElementById('organizations-tbody');
       if (filteredOrgs.length===0) {
-        tbody.innerHTML = `<tr><td colspan="3" class="no-results">
+        tbody.innerHTML = `<tr><td colspan="4" class="no-results">
           No organizations found matching your criteria.
         </td></tr>`;
         return;
       }
-      tbody.innerHTML = filteredOrgs.map(o=>`
+      tbody.innerHTML = filteredOrgs.map(o=>` 
         <tr>
           <td><a href="#/organizations/${o.id}">${o.name}</a></td>
           <td>${o.type}</td>
+          <td><a href="#/organizations/${o.id}/campaigns" class="campaign-count">${o.campaignCount}</a></td>
           <td>${formatDate(o.lastEdited)}</td>
         </tr>
       `).join('');
