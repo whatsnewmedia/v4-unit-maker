@@ -139,6 +139,18 @@
       background:#D25B40;
       color:#fff;
     }
+    .date-range-filter {
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .date-input {
+      padding:6px 8px;
+      border:1px solid #ddd;
+      border-radius:4px;
+      font-size:13px;
+      width:130px;
+    }
 
     /* Table */
     .table-container {
@@ -210,17 +222,9 @@
     <div class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <div class="logo-container">
-          <!-- full logo -->
-          <svg class="logo" id="full-logo" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-            <!-- SVG path data copied from your creatives -->
-            <path d="M0 0 C2.85918357 … 0 0 Z" fill="#D25B40"/>
-            <path d="M0 0 C-1.61546366 … 0 0 Z" fill="#D25B40"/>
-          </svg>
-          <!-- small logo -->
-          <svg class="logo-small" id="small-logo" style="display:none" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0 C2.85918357 … 0 0 Z" fill="#D25B40"/>
-            <path d="M0 0 C-1.61546366 … 0 0 Z" fill="#D25B40"/>
-          </svg>
+          <!-- PG logo placeholder -->
+          <div class="logo" id="full-logo" style="background-color:#D25B40; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">PG</div>
+          <div class="logo-small" id="small-logo" style="background-color:#D25B40; border-radius:50%; display:none; align-items:center; justify-content:center; color:white; font-weight:bold;">PG</div>
         </div>
         <button class="toggle-btn" onclick="toggleSidebar()">
           <i class="material-icons">chevron_left</i>
@@ -270,6 +274,22 @@
                 <div class="facet-option" data-type="Sponsor" onclick="toggleTypeFilter('Sponsor')">Sponsor</div>
               </div>
             </div>
+            <div class="facet">
+              <label>Date Created:</label>
+              <div class="date-range-filter">
+                <input type="date" class="date-input" id="date-created-from" onchange="filterOrganizations()">
+                <span>to</span>
+                <input type="date" class="date-input" id="date-created-to" onchange="filterOrganizations()">
+              </div>
+            </div>
+            <div class="facet">
+              <label>Date Last Edited:</label>
+              <div class="date-range-filter">
+                <input type="date" class="date-input" id="date-edited-from" onchange="filterOrganizations()">
+                <span>to</span>
+                <input type="date" class="date-input" id="date-edited-to" onchange="filterOrganizations()">
+              </div>
+            </div>
           </div>
         </div>
 
@@ -288,6 +308,10 @@
                 <th onclick="sortBy('campaignCount')">
                   Campaign Count
                   <i id="campaign-count-sort-icon" class="material-icons sort-icon">arrow_upward</i>
+                </th>
+                <th onclick="sortBy('dateCreated')">
+                  Date Created
+                  <i id="date-created-sort-icon" class="material-icons sort-icon">arrow_upward</i>
                 </th>
                 <th onclick="sortBy('lastEdited')">
                   Date Last Edited
@@ -310,14 +334,14 @@
   <script>
     // Sample data
     const organizations = [
-      { id:1, name:'World Wildlife Fund', type:'Sponsor', campaignCount: 12, lastEdited:new Date(2025,3,28) },
-      { id:2, name:'The New York Times', type:'Media Partner', campaignCount: 8, lastEdited:new Date(2025,3,27) },
-      { id:3, name:'Facebook', type:'Platform', campaignCount: 15, lastEdited:new Date(2025,3,25) },
-      { id:4, name:'UNICEF', type:'Sponsor', campaignCount: 10, lastEdited:new Date(2025,3,24) },
-      { id:5, name:'Amazon', type:'Platform', campaignCount: 7, lastEdited:new Date(2025,3,22) },
-      { id:6, name:'Twitter', type:'Platform', campaignCount: 5, lastEdited:new Date(2025,3,20) },
-      { id:7, name:'Doctors Without Borders', type:'Sponsor', campaignCount: 9, lastEdited:new Date(2025,3,18) },
-      { id:8, name:'Washington Post', type:'Media Partner', campaignCount: 6, lastEdited:new Date(2025,3,16) }
+      { id:1, name:'World Wildlife Fund', type:'Sponsor', campaignCount: 12, dateCreated:new Date(2025,0,15), lastEdited:new Date(2025,3,28) },
+      { id:2, name:'The New York Times', type:'Media Partner', campaignCount: 8, dateCreated:new Date(2025,1,10), lastEdited:new Date(2025,3,27) },
+      { id:3, name:'Facebook', type:'Platform', campaignCount: 15, dateCreated:new Date(2025,0,5), lastEdited:new Date(2025,3,25) },
+      { id:4, name:'UNICEF', type:'Sponsor', campaignCount: 10, dateCreated:new Date(2025,1,20), lastEdited:new Date(2025,3,24) },
+      { id:5, name:'Amazon', type:'Platform', campaignCount: 7, dateCreated:new Date(2025,0,8), lastEdited:new Date(2025,3,22) },
+      { id:6, name:'Twitter', type:'Platform', campaignCount: 5, dateCreated:new Date(2025,0,12), lastEdited:new Date(2025,3,20) },
+      { id:7, name:'Doctors Without Borders', type:'Sponsor', campaignCount: 9, dateCreated:new Date(2025,0,20), lastEdited:new Date(2025,3,18) },
+      { id:8, name:'Washington Post', type:'Media Partner', campaignCount: 6, dateCreated:new Date(2025,1,15), lastEdited:new Date(2025,3,16) }
     ];
 
     // State
@@ -327,6 +351,10 @@
     let sortCol = 'name';
     let sortDir = 'asc';
     let sidebarCollapsed = false;
+    let dateCreatedFrom = null;
+    let dateCreatedTo = null;
+    let dateEditedFrom = null;
+    let dateEditedTo = null;
 
     document.addEventListener('DOMContentLoaded', () => {
       renderTable();
@@ -338,8 +366,8 @@
         .classList.toggle('collapsed', sidebarCollapsed);
       document.querySelectorAll('.menu-text')
         .forEach(el=>el.style.display = sidebarCollapsed?'none':'block');
-      document.querySelector('.logo').style.display = sidebarCollapsed?'none':'block';
-      document.querySelector('.logo-small').style.display = sidebarCollapsed?'block':'none';
+      document.querySelector('#full-logo').style.display = sidebarCollapsed?'none':'flex';
+      document.querySelector('#small-logo').style.display = sidebarCollapsed?'flex':'none';
       document.querySelector('.toggle-btn i').textContent =
         sidebarCollapsed?'chevron_right':'chevron_left';
     }
@@ -369,13 +397,35 @@
 
     function filterOrganizations() {
       searchQuery = document.getElementById('search-input').value.toLowerCase();
+      dateCreatedFrom = parseInputDate(document.getElementById('date-created-from').value);
+      dateCreatedTo = parseInputDate(document.getElementById('date-created-to').value);
+      dateEditedFrom = parseInputDate(document.getElementById('date-edited-from').value);
+      dateEditedTo = parseInputDate(document.getElementById('date-edited-to').value);
+      
       filteredOrgs = organizations.filter(o=>{
         const matchSearch = !searchQuery|| o.name.toLowerCase().includes(searchQuery);
         const matchType = selectedTypes.includes('All')|| selectedTypes.includes(o.type);
-        return matchSearch&& matchType;
+        
+        // Filter by date created
+        const matchesDateCreated = 
+          (!dateCreatedFrom || o.dateCreated >= dateCreatedFrom) && 
+          (!dateCreatedTo || o.dateCreated <= dateCreatedTo);
+        
+        // Filter by date edited
+        const matchesDateEdited = 
+          (!dateEditedFrom || o.lastEdited >= dateEditedFrom) && 
+          (!dateEditedTo || o.lastEdited <= dateEditedTo);
+          
+        return matchSearch && matchType && matchesDateCreated && matchesDateEdited;
       });
       applySort();
       renderTable();
+    }
+    
+    // Parse date string from input field
+    function parseInputDate(dateString) {
+      if (!dateString) return null;
+      return new Date(dateString);
     }
 
     function sortBy(col) {
@@ -384,7 +434,7 @@
       document.querySelectorAll('.sort-icon').forEach(ic=>{
         ic.textContent = 'arrow_upward';
       });
-      const id = col==='lastEdited'?'date':(col==='campaignCount'?'campaign-count':col);
+      const id = col==='lastEdited'?'date':(col==='campaignCount'?'campaign-count':(col==='dateCreated'?'date-created':col));
       const icon = document.getElementById(`${id}-sort-icon`);
       icon.textContent = sortDir==='asc'?'arrow_upward':'arrow_downward';
       applySort();
@@ -398,8 +448,8 @@
           res = a[sortCol].localeCompare(b[sortCol]);
         } else if (sortCol==='campaignCount') {
           res = a.campaignCount - b.campaignCount;
-        } else {
-          res = a.lastEdited - b.lastEdited;
+        } else if (sortCol==='dateCreated' || sortCol==='lastEdited') {
+          res = a[sortCol] - b[sortCol];
         }
         return sortDir==='asc'?res:-res;
       });
@@ -412,7 +462,7 @@
     function renderTable() {
       const tbody = document.getElementById('organizations-tbody');
       if (filteredOrgs.length===0) {
-        tbody.innerHTML = `<tr><td colspan="4" class="no-results">
+        tbody.innerHTML = `<tr><td colspan="5" class="no-results">
           No organizations found matching your criteria.
         </td></tr>`;
         return;
@@ -422,6 +472,7 @@
           <td><a href="#/organizations/${o.id}">${o.name}</a></td>
           <td>${o.type}</td>
           <td><a href="#/organizations/${o.id}/campaigns" class="campaign-count">${o.campaignCount}</a></td>
+          <td>${formatDate(o.dateCreated)}</td>
           <td>${formatDate(o.lastEdited)}</td>
         </tr>
       `).join('');
